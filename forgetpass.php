@@ -15,7 +15,7 @@
       elseif(mysqli_select_db($con,"bank"))
      {
            echo "<script type='text/javascript'>alert('email:".$_POST["email"]."  username".$_POST["username"]." id:".$_POST["question"]." Answer:".$_POST["answer"]."')</script>";
-           $sql="select count(*) from User where EMAIL='".$_POST["email"]."' or USERNAME='".$_POST["username"]."' and (SECURITYID=".$_POST["question"]." and SECURITYANSWER='".md5($_POST["answer"])."')";
+           $sql="select count(*) from User where (EMAIL='".$_POST["email"]."' or USERNAME='".$_POST["username"]."') and (SECURITYID=".$_POST["question"]." and SECURITYANSWER='".md5($_POST["answer"])."')";
            $result=mysqli_query($con,$sql);
            if($result)
            {
