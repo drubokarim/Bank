@@ -10,6 +10,7 @@
 <?php
 if(!isset($_SESSION["user"])) 
 	{header("Location: http://localhost/wt/login.php");}
+  
 ?>
 <form method="post" action="">
 <div id="header">
@@ -40,22 +41,22 @@ if(!isset($_SESSION["user"]))
 			<p>
                <label>*Currency Code : 
                </label>
-               <input type="text" name= "currencycode" class="long"/>
+               <input type="text" name= "currencycode" >
             </p>
 			<p>
                 <label >*Currency Name :
                 </label>
-                <input type="text" name= "currencyname" class="long" maxlength="10"/>
+                <input type="text" name= "currencyname"  maxlength="10">
             </p>
          	
 			<p> 
 			   <label>*Rate :
                </label>
-               <input type="varchar" name= "rate" class="long"/>
+               <input type="varchar" name= "rate" patern="[0-9]*">
             </p>
 			
-             <div><input type="submit" name="update" value="update"><BR> </BR> <div><input type="submit" name="ADD_NEW" value="ADD NEW"></div>
-             <table>
+             <div><input type="submit" name="ADD_NEW" value="ADD NEW"></div><BR> </BR><div><input type="submit" name="update" value="update"> 
+             <table id="tables" border="1">
              	<tr>
              		<th>Currency Code</th>
              		<th>Currency Name</th>
