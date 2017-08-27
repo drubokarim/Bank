@@ -1,4 +1,4 @@
-<?php session_start(); $uname="";$uid="";?>
+<?php session_start(); $uname="";$uid="";$to_uname=$to_description=$to_account=$from_account="";$to_amount=0;?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,16 +9,25 @@
    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<?php $to_uname=$to_amount=$to_account=$to_description=$from_account="";
+<?php 
 if(!isset($_SESSION["user"])) 
-   {header("Location: http://localhost/wt/login.php");}
- if($_SERVER["REQUEST_METHOD"]=="POST")
+   {
+    header("Location: http://localhost/wt/login.php");
+  }
+   
+  if($_SERVER["REQUEST_METHOD"]=="POST" && (!isset($_POST['Transfer_btn']) && !isset($_POST['Transfer_Usr_btn']) && !isset($_POST['Transfer_Acc_btn'])))
   {
+    echo "<script type='text/javascript'>alert('Trello')</script>";
+    if($_POST['Proceed'])
+    {
+
+    echo "<script type='text/javascript'>alert('Hello World')</script>";
     $to_uname=$_POST["_username"];
     $to_account=$_POST["_accountNp"];
     $to_amount=$_POST["_amount"];
     $to_description=$_POST["_Description"] ;
     $from_account=$_POST["_from"];
+    
     $con=mysqli_connect("localhost","ASD","123");
     if(!$con)
     {
@@ -37,31 +46,59 @@ if(!isset($_SESSION["user"]))
                 $sql1="select * from account where user_id=".$to_uid."";
                 $tovalid1=mysqli_query($con,$sql1);
                 if($tovalid1)
-                {
-                  $sql2="select TOTAL_BALACE from account where USER_ID=".$uid." and ACCOUNT_NUMBER=".$_from."";
+                { 
+
+                  $sql2="select TOTAL_BALACE from account where  ACCOUNT_NUMBER=".$from_account."";
                   $tresult=mysqli_query($con,$sql2);
                   if($tresult)
-                  {
-                    $from_balance;
+                  { 
+                    
+                    $from_balance=0;
                     while ($tr=mysqli_fetch_array($tresult)) {
                        $from_balance=$tr["TOTAL_BALACE"];
                     }
                     if($to_amount>100 )
                       {
-                            if($from_balance>1000)
+                            if($from_balance>1000 && $from_balance-$to_amount>=300)
                             {
-                                   $sql3="update account set TOTAL_BALACE=TOTAL_BALACE-".$to_amount." where USER_ID=".$uid." and ACCOUNT_NUMBER=".$_from."";
+                                   $diff=$from_balance-$to_amount;
+                                   $sql3="update account set TOTAL_BALACE=".$diff." where ACCOUNT_NUMBER=".$from_account."";
                                    $tr1=mysqli_query($con,$sql3);
                                    if($tr1)
                                    {
                                        $sql4="update account set TOTAL_BALACE=TOTAL_BALACE+".$to_amount." where USER_ID=".$to_uid." and ACCOUNT_NUMBER=".$to_account."";
-                                       $tr2=mysqli_query($con,$sql4);
+                                       $tr2=mysqli_query($con,$sql4);$trcode=date('Y-m-dh:i:sa');
                                        if($tr2)
                                        {
-                                         $sql5="Insert into transection(TR_CODE,FROM,TO,AMOUNT,HAPPENED_DATE_TIME,STATUS,DESCRIPTION) valuees(DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s'),".$_from.",".$to_account.",".$to_amount.",) ";
-                                         echo "<script type='text/javascript'>alert('Not enough balance')</script>";
+                                         
+                                         $sql5="insert into `transaction` (`TR_CODE`, `FROM`, `TO`, `AMOUNT`, `HAPPENED_DATE_TIME`, `STATUS`, `DESCRIPTION`) VALUES('".$trcode."','".$from_account."','".$to_account."',".$to_amount.",CURDATE(),1,'".$to_description."')";
+                                         $tr3=mysqli_query($con,$sql5);
+                                         if($tr3)
+                                         {echo "<script type='text/javascript'>alert('".$to_uname.$to_account.$to_description.$from_account."')</script>";
+                                            echo "<script type='text/javascript'>alert('Transaction Successful')</script>";
+
+                                         }
+                                         else
+                                         {
+                                          echo "<script type='text/javascript'>alert('Transaction failed".$trcode."')</script>";
+                                          $tr3=mysqli_query($con,"update account set TOTAL_BALACE=".$from_balance." where ACCOUNT_NUMBER=".$from_account."");
+                                          $tr4=mysqli_query($con,"update account set TOTAL_BALACE=TOTAL_BALACE-".$to_amount." where USER_ID=".$to_uid." and ACCOUNT_NUMBER=".$to_account."");
+                                         }
+                                         
                                        }
+                                       else
+                                       {
+                                         echo "<script type='text/javascript'>alert('Transaction failed')</script>";
+                                         $tr3=mysqli_query($con,"update account set TOTAL_BALACE=".$from_balance." where ACCOUNT_NUMBER=".$from_account."");
+
+                                       }
+
                                    }
+                                   else
+                                   {
+                                       echo "<script type='text/javascript'>alert('Transaction failed')</script>";
+                                   }
+                                    
 
                             }
                             else
@@ -87,7 +124,9 @@ if(!isset($_SESSION["user"]))
     }
     else{
                  echo "<script type='text/javascript'>alert('error!couldnot connect to the server')</script>";
-    } }                                                                                                                                       
+    } 
+  }
+  }                                                                                                                                       
 ?>
 <form method="post" action="">
 <div id="header">
@@ -102,7 +141,7 @@ if(!isset($_SESSION["user"]))
 
     <input type="submit" id="button" value="Home" formaction="http://localhost/wt/dashboard.php">
     <input type="submit" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
-    <input type="submit" style="color: black;" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
+    <input type="submit" name="Transfer_btn" style="color: black;" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
     <input type="submit" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
     <input type="submit" id="button" value="Settings" formaction="http://localhost/wt/Settings.php">
     <input type="submit" id="button" value="Profile" formaction="http://localhost/wt/AccountInformation.php">
@@ -111,11 +150,11 @@ if(!isset($_SESSION["user"]))
 </div>
 </form>
 <div>
-<form class="Pos">
+<form class="Pos" method="post">
   <fieldset class="Pos">
     <legend>Transfer</legend>
-   <input type="submit" style="color: black; font-size: 100%;" id="button" value="User_To_User" formaction="http://localhost/wt/transfer.php">
-   <input type="submit" style="font-size: 100%;" id="button" value="Account_To_Account" formaction="http://localhost/wt/transfer1.php">
+   <input type="submit" style="color: black; font-size: 100%;" name="Transfer_Usr_btn" id="button" value="User_To_User" formaction="http://localhost/wt/transfer.php">
+   <input type="submit" style="font-size: 100%;" id="button" name="Transfer_Acc_btn" value="Account_To_Account" formaction="http://localhost/wt/transfer1.php">
 <form method="post" action="">
    <fieldset>
      <legend>User_to_User</legend>
@@ -164,7 +203,7 @@ if(!isset($_SESSION["user"]))
      *Amount To Transfer : <input type="text" name="_amount" pattern="[0-9]+(\.[0-9]{0,10})?%?"  ><br><br><br>
      *Description        : <textarea name="_Description" rows="6" cols="60"  ></textarea> <br><br>
 
-     <input type="submit" name="Proceed" value="Proceed">
+     <input type="submit" name="Proceed" value="Proceed" method="post" formaction="">
    </fieldset>
 </form>
 
