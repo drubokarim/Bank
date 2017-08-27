@@ -1,0 +1,46 @@
+p{
+	color: white;
+}
+
+
+body{
+	background-image: url(sa.jpg);
+	background-size: cover;
+	background-position: center;
+
+}
+button {
+	font-size: 20px;
+	
+
+}
+legend{
+	color: white;
+}
+.date{
+	color: black;
+} 
+.year{
+	color: black;
+} 
+.month{
+	color: black;
+} 
+.long{
+	color: black;
+	text-align: center;
+
+
+} 
+.error{
+            width: 92%;
+            margin: 0px auto;
+            padding: 10px;
+            border: 1px solid red;
+            color: #FF0000;
+            background:#F2DEDE;
+            border-radius: 5px;
+            text-align: left;
+      }         
+      
+

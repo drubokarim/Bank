@@ -1,0 +1,25 @@
+.design {
+	padding: 40px 90px;
+	font-size: 13px;
+	font-style: Verdana, Tahoma, sans-serif;
+}
+.vision{
+	color: black;
+}
+.s{
+	font-size:20px;
+}
+h1 {
+	margin-bottom: 40px;
+	color: #474E69;
+	padding-left: 450px;
+}
+
+body{
+	background-image: url(s3.jpg);
+	background-size: cover;
+	background-position: center;
+	font-family: lato;
+	color: white;
+
+}
