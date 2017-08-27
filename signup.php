@@ -11,9 +11,10 @@
     <body> 
 
 <?php
+
 $Errors=array();
 $uname=$pass=$cpass=$emails=$fname=$lname=$mobiles=$addresses=$_city=$country=$_zip_code=$question=$_answer=$day=$month=$year="";
- $_dob='00-00-0000';
+ $_dob="";
 $unameErr=$passErr=$cpassErr=$emailsErr=$fnameErr=$lnameErr=$mobilesErr=$addressesErr=$_cityErr=$_countryErr=$_zip_codeErr=$_questionErr=$_answerErr=$_dobErr="";
 $useruniq=1;
 if($_SERVER["REQUEST_METHOD"]=="POST")
@@ -50,6 +51,29 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
       }
   }
   $emails=test_input($_POST["email"]);
+       $con=mysqli_connect("localhost","ASD","123");
+      if(!$con)
+      {
+        echo "<script type='text/javascript'>alert('error!couldnot connect')</script>";
+      }
+      else
+     {
+      mysqli_select_db($con,"bank");
+      $sql="select EMAIL from USER ";
+      $result=mysqli_query($con,$sql)
+      or die("error retrieving data from db".mysqli_error());
+      
+      while ($row=mysqli_fetch_array($result)) {
+        if($emails==$row["EMAIL"])
+        {
+          //$useruniq=0;
+         
+          array_push($Errors, "Already Registered");
+
+          break;
+        }
+      }
+  }
   $pass=test_input($_POST["password"]);
   $cpass=test_input($_POST["cpassword"]);
   if($pass!=$cpass)
@@ -75,11 +99,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
       array_push($Errors, "You must be atleast 18 years old to open an Account");
     }
     else{
-       $_dob=test_input($_POST["day"].$_POST["month"].$_POST["year"]);
-       $day=test_input($_POST["day"]);
-       $month=test_input($_POST["month"]);
-       $year=test_input($_POST["year"]);
+       
+       $day=$_POST["day"];
+       $month=$_POST["month"];
+       $year=$_POST["year"];
+       $_dob=$_POST["day"]."".$_POST["month"]."".$_POST["year"];
        echo "<script type='text/javascript'>alert('".$_dob."')</script>";
+       //
     }
   }
   else
@@ -127,7 +153,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   $_answer=test_input($_POST["answer"]);
   $country=test_input($_POST["country"]);
   echo "<script type='text/javascript'>alert('".$question.$country."')</script>";
-  if((isset($_POST["acceptbox"]) && $_POST["acceptbox"]=="acceptbox")&& count($Errors)==0)
+  if((isset($_POST["acceptbox"]) && $_POST["acceptbox"]=="acceptbox") && count($Errors)==0)
   {
     $con=mysqli_connect("localhost","ASD","123");
       if(!$con)
@@ -137,24 +163,24 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
       else
      {
       mysqli_select_db($con,"bank");
-      $retrieveuId="select max(id) from user";
+      $retrieveuId="select count(id) from user";
       $rs=mysqli_query($con,$retrieveuId)
       or die("error retrieving user id".mysqli_error($con));
       $uis;
       while($row1=mysqli_fetch_array($rs))
       {
         //if($row1["username"]==$_POST["uname"])
-        $uis=$row1["max(id)"]+1;
+        $uis=$row1["count(id)"]+1;
 
 
       }
+      $pass=md5($pass);
+      $_answer=md5($_answer);
       $sql="Insert into user(USERNAME,PASSWORD,EMAIL,USERTYPE,STATUS,CREATED_AT,SECURITYID,SECURITYANSWER)values('".$uname."','".$pass."','".$emails."',0,1,CURDATE(),'".$question."','".$_answer."')";
       $result=mysqli_query($con,$sql)
       or die("error inserting data into db".mysqli_error($con));
-      
-      $date=date_create($_dob);
       $address1=$addresses.",".$_city.",".$_zip_code.",".$country;
-      $sql1="Insert into userinfo(USERID,FIRSTNAME,LASTNAME,DOB,PHONE,ADDRESS)values('".$uis."','".$fname."','".$lname."','".$date."','".$mobiles."','".$address1."')";
+      $sql1="Insert into userinfo(USERID,FIRSTNAME,LASTNAME,DOB,PHONE,ADDRESS)values('".$uis."','".$fname."','".$lname."','".$_dob."','".$mobiles."','".$address1."')";
       $result1=mysqli_query($con,$sql1)
       or die("error inserting data into userdb".mysqli_error($con));
       
@@ -339,29 +365,29 @@ function test_input($data)
                     </select>
                     <select class="month" name="month" value="<?php echo $_POST["month"];?>" required>
                         
-                        <option value="1" <?php if(isset($month) && $month=="1") echo "selected";?>>January
+                        <option value="January" <?php if(isset($month) && $month=="January") echo "selected";?>>January
                         </option>
-                        <option value="2" <?php if(isset($month) && $month=="2") echo "selected";?>>February
+                        <option value="February" <?php if(isset($month) && $month=="February") echo "selected";?>>February
                         </option>
-                        <option value="3" <?php if(isset($month) && $month=="3") echo "selected";?>>March
+                        <option value="March" <?php if(isset($month) && $month=="March") echo "selected";?>>March
                         </option>
-                        <option value="4" <?php if(isset($month) && $month=="4") echo "selected";?>>April
+                        <option value="April" <?php if(isset($month) && $month=="April") echo "selected";?>>April
                         </option>
-                        <option value="5" <?php if(isset($month) && $month=="5") echo "selected";?>>May
+                        <option value="May" <?php if(isset($month) && $month=="May") echo "selected";?>>May
                         </option>
-                        <option value="6" <?php if(isset($month) && $month=="6") echo "selected";?>>June
+                        <option value="June" <?php if(isset($month) && $month=="June") echo "selected";?>>June
                         </option>
-                        <option value="7" <?php if(isset($month) && $month=="7") echo "selected";?>>July
+                        <option value="July" <?php if(isset($month) && $month=="July") echo "selected";?>>July
                         </option>
-                        <option value="8" <?php if(isset($month) && $month=="8") echo "selected";?>>August
+                        <option value="August" <?php if(isset($month) && $month=="August") echo "selected";?>>August
                         </option>
-                        <option value="9" <?php if(isset($month) && $month=="9") echo "selected";?>>September
+                        <option value="September" <?php if(isset($month) && $month=="September") echo "selected";?>>September
                         </option>
-                        <option value="10" <?php if(isset($month) && $month=="10") echo "selected";?>>October
+                        <option value="October" <?php if(isset($month) && $month=="October") echo "selected";?>>October
                         </option>
-                        <option value="11" <?php if(isset($month) && $month=="11") echo "selected";?>>November
+                        <option value="November" <?php if(isset($month) && $month=="November") echo "selected";?>>November
                         </option>
-                        <option value="12" <?php if(isset($month) && $month=="12") echo "selected";?>>December
+                        <option value="December" <?php if(isset($month) && $month=="December") echo "selected";?>>December
                         </option>
                     </select>
                     <input class="year" name="year" type="text" size="4" maxlength="4" minlength="4" value="<?php echo $year;?>" required>

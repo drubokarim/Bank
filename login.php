@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 		{
 			if(mysqli_select_db($con,'bank'))
 			{
-				$sql="select * from USER WHERE USERNAME='".$uname."' and PASSWORD='".$pass."'";
+				$sql="select * from USER WHERE USERNAME='".$uname."' and PASSWORD='".md5($pass)."'";
 			    $result=mysqli_query($con,$sql)
 			    or die("Failed to retrieve data from DB".mysqli_error());
 			    $row=mysqli_fetch_array($result);
@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 				//echo "<script type='text/javascript'>alert('".$row["password"]."')</script>";
 			
 			   //if($result=)
-			   if($row["USERNAME"]==$uname && $row["PASSWORD"]==$pass)
+			   if($row["USERNAME"]==$uname && $row["PASSWORD"]==md5($pass))
 			   {
 
 				    //echo "<script type='text/javascript'>alert('".$_POST["password"]."')</script>";

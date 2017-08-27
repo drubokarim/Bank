@@ -60,8 +60,8 @@ if(!isset($_SESSION["user"]))
 
 	 <input type="submit" id="button" value="Home" formaction="http://localhost/wt/dashboard.php">
 	 <input  style="color: black;" type="submit" name="acc_btn" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
-	 <input type="submit" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
-	 <input type="submit" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
+	 <input type="submit" name="Transfer_btn" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
+	 <input type="submit" name="Statements" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
 	 <input type="submit" id="button" value="Settings" formaction="http://localhost/wt/Settings.php">
 	 <input type="submit" id="button" value="Profile" formaction="http://localhost/wt/AccountInformation.php">
 	 <input type="submit" id="button" value="Logout" formaction="http://localhost/wt/login.php">
@@ -146,7 +146,11 @@ if(!isset($_SESSION["user"]))
 				<th>
 					Status
 				</th>
-			</tr><?php                                                                                                                                                                               if($_SERVER["REQUEST_METHOD"]=="POST"  && (!isset($_POST['acc_btn']) && !isset($_POST['Selection']) ) ){if($_POST['search'])         {                                           $con=mysqli_connect("localhost","ASD","123");
+			</tr><?php                                                                                                                                             if($_SERVER["REQUEST_METHOD"]=="POST"  && (!isset($_POST['acc_btn']) && !isset($_POST['Selection']) ) )
+                {
+                if($_POST['search'])         
+                 {                                           
+                $con=mysqli_connect("localhost","ASD","123");
 		        if(!$con)
 		        {
 			     echo "<script type='text/javascript'>alert('error!couldnot connect')</script>";
@@ -176,7 +180,10 @@ if(!isset($_SESSION["user"]))
 		       }
 		       else{
                  echo "<script type='text/javascript'>alert('error!couldnot connect to the server')</script>";
-		      }                                                                                                                                                                                 }  }                                                                                                                                                                                elseif ($_SERVER["REQUEST_METHOD"]=="POST") {
+		      }                                                                                                                                                                                
+          } 
+          }                                                                                                                                   
+              elseif ($_SERVER["REQUEST_METHOD"]=="POST") {
 		      
 		      if(!$con)
 		      {

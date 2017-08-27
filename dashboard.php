@@ -27,7 +27,7 @@ if(!isset($_SESSION["user"]))
 	 <input type="submit" style="color: black;" id="button" value="Home" formaction="http://localhost/wt/dashboard.php">
 	 <input type="submit" name="acc_btn" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
 	 <input type="submit" id="button" name="Transfer_btn" value="Transfer" formaction="http://localhost/wt/transfer.php">
-	 <input type="submit" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
+	 <input type="submit" name="Statements" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
 	 <input type="submit" id="button" value="Settings" formaction="http://localhost/wt/Settings.php">
 	 <input type="submit" id="button" value="Profile" formaction="http://localhost/wt/AccountInformation.php">
 	 <input type="submit" id="button" value="Logout" formaction="http://localhost/wt/login.php">
