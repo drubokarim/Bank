@@ -1,0 +1,84 @@
+body{
+	background-image: url(s1.jpg);
+	background-size: cover;
+	color: white;
+
+}
+#header
+{
+	
+	width: 100px;height: 200px;
+	
+	float: right;
+	/*position: 251px;border-radius: 5px;margin: 10px;
+	background-color: #0099ff;
+    top:0;
+    left: 300;*/
+}
+.Pos{
+	float: center;
+	display: block;
+	top:50px;
+	left: 116.5px;
+	width:90%;
+	height: 109.74%;
+	position: absolute;
+}
+#sidebar{
+	position: all;
+	
+
+	height: 1000px;
+	width: 200px;
+    top:0;
+    left: 0;
+}
+#button
+{
+	width: 200px;
+	height: 100px;
+    background-color: #0099ff;
+    color: white;
+    font-size: 250%;
+    font-family: lato;
+    padding: 2px;
+}
+.letters{
+	font-family: lato;
+	font-size: 161%;
+	position: all;
+	height: 200px;
+	width: 250px;
+    top:0;
+    left: 0;
+    background-color:#0099ff; 
+    /*border: 1px solid white;*/
+}
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tablinks{
+font-size: 20px;
+background: #666;
+color: #fff;
+padding: 10px 20px;
+cursor: pointer;
+transition: 0.2s;
+}
+div.tablinks:focus{
+	outline: none;
+}
+div.tbs{
+	display: flex;
+}
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}

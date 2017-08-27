@@ -1,0 +1,59 @@
+body{
+	background-image: url(s1.jpg);
+	background-size: cover;
+	color: white;
+
+}
+.Pos{
+	float: center;
+	display: block;
+	top:50px;
+	left: 116.5px;
+	width:90%;
+	height: 109.74%;
+	position: absolute;
+}
+#header
+{
+	
+	width: 100px;height: 200px;
+	
+	float: right;
+	/*position: 251px;border-radius: 5px;margin: 10px;position: absolute;
+	background-color: #0099ff;
+    top:0;
+    left: 300;*/
+}
+
+#sidebar{
+	position: all;
+	
+
+	height: 1000px;
+	width: 200px;
+    top:0;
+    left: 0;
+}
+#button
+{
+	width: 200px;
+	height: 100px;
+    background-color: #0099ff;
+    color: white;
+    font-size: 250%;
+    font-family: lato;
+    padding: 2px;
+}
+.letters{
+	font-family: lato;
+	font-size: 161%;
+	position: all;
+	height: 200px;
+	width: 250px;
+    top:0;
+    left: 0;
+    background-color:#0099ff; 
+    /*border: 1px solid white;*/
+}
+
+		

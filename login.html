@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html >
+<head>
+  
+  <title>Login Form</title>
+  
+  	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="log.css">
+
+  
+</head>
+
+
+<body>
+<?php
+$_unameError=$_passwordError="";
+?>
+<?php
+$uname="";
+$pass="";
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+	if(empty($_POST["username"])==true)
+	{
+		$_unameError="user name required";
+	}
+	else if(empty($_POST["password"])==true)
+	{
+		$_passwordError="Password Required";
+
+	}
+	else{
+		$con=mysqli_connect("localhost","","");
+		if(!$con)
+		{
+			echo "error connecting to DB";
+		}
+		else
+		{
+			mysqli_select_db($con,"Bank");
+			$sql="select USERNAME,PASSWORD from USER WHERE USERNAME='".$_POST["username"]."'' and PASSWORD='".$_POST["password"]."'";
+			$result=mysqli_query($con,$sql);
+			$i=0;
+			//if($result=)
+			if(!$result)
+			{
+
+				echo "<script type='text/javascript'>alert('login successful!')</script>";
+				header("Location: http://localhost/WebTechProject/Dashboard.php");
+			}
+			else
+			{
+				echo "<script type='text/javascript'>alert('login successful!')</script>";
+			}
+		}
+	}
+
+}
+?>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">G-Banking</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li class="active"><a href="homepage.html">Home</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+       
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+ <body class="b1">
+ 	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1 class="lo">Login</h1>
+			</div>
+<form method="post" action="">
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="username" id="login-name">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" value="" placeholder="password" id="login-pass">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<input type="submit"  class="btn btn-primary btn-large btn-block" value="Login">
+				<a class="login-link" href="#">Forgot password?</a>
+			</div>
+</form>
+		</div>
+	</div>
+
+ </body>
+	
+  
+  
+
+</html>
