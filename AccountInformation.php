@@ -1,4 +1,7 @@
-<?php session_start();?>
+<?php 
+session_start();
+$Email=$DOB=$Phone=$ADDRESS=$STATUS=$Accounts="";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +15,37 @@
 <?php
 if(!isset($_SESSION["user"])) 
 	{header("Location: http://localhost/wt/login.php");}
+  $con=$con=$con=mysqli_connect("localhost","ASD","123");
+  if(!$con)
+  {
+  	echo "<script type='text/javascript'>alert('error!couldnot connect')</script>";
+
+  } 
+  elseif (mysqli_select_db($con,"bank")) {
+     	$sql="select Email,DOB,Phone,ADDRESS,STATUS from user,userinfo where username='".$_SESSION["user"]."' and user.id=userinfo.userid ";
+     	$sql1="select count(*) as Noacc from account,user where user.id=account.user_id and username='".$_SESSION["user"]."'";
+     	$res=mysqli_query($con,$sql);
+     	$res1=mysqli_query($con,$sql1);
+     	if($res && $res1)
+     	{
+     		 echo "<script type='text/javascript'>alert('loading successful')</script>"; 
+                while ($r1=mysqli_fetch_array($res)) {
+                	$Email=$r1["Email"];
+                	$DOB=$r1["DOB"];
+                	$Phone=$r1["Phone"];
+                	$ADDRESS=$r1["ADDRESS"];
+                	$STATUS=$r1["STATUS"];
+                	}
+                	while ($r2=mysqli_fetch_array($res1)) {
+                		 $Accounts=$r2["Noacc"];
+                	}
+     	}
+     	else
+     	{
+               echo "<script type='text/javascript'>alert('error!loading data')</script>";  
+     	}
+     }   
+
 ?>
 <form method="post" action="">
 <div id="header">
@@ -25,9 +59,9 @@ if(!isset($_SESSION["user"]))
 <fieldset>
 
 	 <input type="submit" id="button" value="Home" formaction="http://localhost/wt/dashboard.php">
-	 <input type="submit" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
-	 <input type="submit" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
-	 <input type="submit" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
+	 <input type="submit" name="acc_btn" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
+	 <input type="submit" name="Transfer_btn" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
+	 <input type="submit" name="Statements" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
 	 <input type="submit" id="button" value="Settings" formaction="http://localhost/wt/Settings.php">
 	 <input type="submit" style="color: black;" id="button" value="Profile" formaction="http://localhost/wt/AccountInformation.php">
 	 <input type="submit" id="button" value="Logout" formaction="http://localhost/wt/login.php">
@@ -47,9 +81,9 @@ if(!isset($_SESSION["user"]))
 <br>
 <h3>
 <pre>
-Email Address 
+Email Address    <input type="text" name="Email" value="<?php echo $Email;?>" readonly>
 Password        <a href="http://localhost/wt/ChangePassword.php">change Password</a>
-Date of Birth
+Date of Birth   <input type="text" name="DOB" value="<?php echo $DOB;?>" readonly>
 </pre>
 </h3>
 <h1 style="color: blue">
@@ -58,7 +92,7 @@ Date of Birth
 <br>
 <h3>
 <pre>
-Phone Number 
+Phone Number <input type="text" name="mobile" value="<?php echo $Phone;?>" readonly>
 </pre>
 </h3>
 
@@ -68,8 +102,8 @@ Phone Number
 <br>
 <h3>
 <pre>
-Date
-IP Address:
+Date <input type="text" name="Login" value="<?php echo date("Y-m-d");?>" readonly>
+
 </pre>
 </h3>
 <h1 style="color: blue">
@@ -78,20 +112,18 @@ IP Address:
 <br>
 <h3>
 <pre>
-Address 
-Zip/postal Code
-Country
+Address :<input type="text" name="address" value="<?php echo $ADDRESS;?>" readonly>
+
 </pre>
 </h3>
 
 <h1 style="color: blue">
 	User Status
 </h1>
-<br>
 <h3>
 <pre>
-Staus
-Accounts
+Staus <input type="text" name="status" value="<?php if($STATUS>0) echo "ACTIVE"; else echo "INACTIVE";?>" readonly>
+Accounts  <input type="text" name="NO_OF_ACCOUNTS" value="<?php echo $Accounts;?>" readonly>
 </pre>
 </h3>
 </fieldset>

@@ -140,9 +140,9 @@ if(!isset($_SESSION["user"]))
 <fieldset>
 
     <input type="submit" id="button" value="Home" formaction="http://localhost/wt/dashboard.php">
-    <input type="submit" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
+    <input type="submit" name="acc_btn" id="button" value="Accounts" formaction="http://localhost/wt/accounts.php">
     <input type="submit" name="Transfer_btn" style="color: black;" id="button" value="Transfer" formaction="http://localhost/wt/transfer.php">
-    <input type="submit" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
+    <input type="submit" name="Statements" id="button" value="Statements" formaction="http://localhost/wt/statements.php">
     <input type="submit" id="button" value="Settings" formaction="http://localhost/wt/Settings.php">
     <input type="submit" id="button" value="Profile" formaction="http://localhost/wt/AccountInformation.php">
     <input type="submit" id="button" value="Logout" formaction="http://localhost/wt/login.php">
@@ -160,7 +160,8 @@ if(!isset($_SESSION["user"]))
      <legend>User_to_User</legend>
      select your Debit Account
      <select name="_from">
-       <option value="Account Number - Current Balance">Account Number - Current Balance</option>   <?php 
+       <option value="Account Number - Current Balance">Account Number - Current Balance</option>   
+       <?php 
     $con=mysqli_connect("localhost","ASD","123");
     if(!$con)
     {
