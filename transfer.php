@@ -58,7 +58,7 @@ if(!isset($_SESSION["user"]))
                                        $tr2=mysqli_query($con,$sql4);
                                        if($tr2)
                                        {
-                                         $sql5="";
+                                         $sql5="Insert into transection(TR_CODE,FROM,TO,AMOUNT,HAPPENED_DATE_TIME,STATUS,DESCRIPTION) valuees(DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s'),".$_from.",".$to_account.",".$to_amount.",) ";
                                          echo "<script type='text/javascript'>alert('Not enough balance')</script>";
                                        }
                                    }
